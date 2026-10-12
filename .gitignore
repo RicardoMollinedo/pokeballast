@@ -1,0 +1,20 @@
+# ---- Not part of the deliverable (workspace only) ----
+/CLAUDE.md
+/.claude/
+/tasks/
+/development-documentation/
+/documentation/
+
+# ---- Local credentials ----
+pokeballast/config/application-local.yaml
+.env
+
+# ---- Build output / IDE ----
+target/
+target_test-classes/
+node_modules/
+dist/
+coverage/
+.idea/
+.vscode/
+*.iml

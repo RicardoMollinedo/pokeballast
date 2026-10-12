@@ -1,0 +1,7 @@
+# Template for a local PostgreSQL. Copy it to config/application-local.yaml (git-ignored), fill in your
+# credentials and run with: SPRING_PROFILES_ACTIVE=local ./mvnw spring-boot:run
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/pokebase
+    username: pokemon
+    password: "<your password>"

@@ -1,0 +1,92 @@
+server:
+  # behind the reverse proxy: honour X-Forwarded-Proto/Host so absolute URLs (Location) use https and the public host
+  forward-headers-strategy: framework
+
+spring:
+  application:
+    name: pokeproject
+  threads:
+    virtual:
+      enabled: true
+  # Zero-setup default: in-memory H2 in PostgreSQL mode. Point DB_URL at PostgreSQL for real environments.
+  datasource:
+    url: ${DB_URL:jdbc:h2:mem:pokeballast;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH}
+    username: ${DB_USERNAME:sa}
+    password: ${DB_PASSWORD:}
+  jpa:
+    open-in-view: false        # no lazy loading from controllers; transactions end in repository.adapter
+    hibernate:
+      ddl-auto: validate       # Flyway owns the schema; Hibernate only checks the mapping matches it
+  flyway:
+    locations: classpath:db/migration,classpath:db/seed   # schema migrations + demo data (database/scripts)
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: true   # a typo in a payload field is a 400, not silently ignored
+  cache:
+    cache-names: pokeapi-pages,pokeapi-pokemon,pokeapi-species,pokeapi-evolution-chains
+    caffeine:
+      spec: maximumSize=5000,expireAfterWrite=6h
+
+# Resilience of the PokeAPI calls (see service.PokeApiResilience). A cached response never consumes a permit.
+resilience4j:
+  ratelimiter:
+    instances:
+      pokeapi:
+        limit-for-period: 50          # at most 50 calls per second to PokeAPI (fair use)
+        limit-refresh-period: 1s
+        timeout-duration: 3s          # wait up to 3s for a permit, then 503
+  bulkhead:
+    instances:
+      pokeapi:
+        max-concurrent-calls: 20      # the US01 fan-out never opens more than 20 connections
+        max-wait-duration: 3s
+  retry:
+    instances:
+      pokeapi:
+        max-attempts: 3               # 1 call + 2 retries, transient failures only
+        wait-duration: 200ms
+        enable-exponential-backoff: true
+        exponential-backoff-multiplier: 2
+        retry-exceptions:
+          - org.springframework.web.client.RestClientException
+        ignore-exceptions:
+          - com.ballastlane.pokeproject.exceptions.BallastException   # e.g. 404: retrying would not help
+  circuitbreaker:
+    instances:
+      pokeapi:
+        sliding-window-size: 20
+        minimum-number-of-calls: 10
+        failure-rate-threshold: 50    # open when half of the last calls failed
+        wait-duration-in-open-state: 30s
+        permitted-number-of-calls-in-half-open-state: 3
+        record-exceptions:
+          - org.springframework.web.client.RestClientException
+        ignore-exceptions:
+          - com.ballastlane.pokeproject.exceptions.BallastException
+
+pokeapi:
+  base-url: ${POKEAPI_BASE_URL:https://pokeapi.co/api/v2}
+  connect-timeout: 3s
+  read-timeout: 5s
+
+security:
+  jwt:
+    # Development-only default. Always set JWT_SECRET (at least 32 bytes) outside your machine.
+    secret: ${JWT_SECRET:local-dev-secret-change-me-please-0123456789}
+    issuer: pokeballast
+    ttl: 2h
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health     # only health is public; nothing else is exposed
+
+logging:
+  pattern:
+    # audit context (filled by AuditHeadersFilter) on every log line
+    level: "%5p [ip=%X{clientIp:-} user=%X{xUser:-} channel=%X{channel:-}]"
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
