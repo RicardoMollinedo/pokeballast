@@ -1,0 +1,7 @@
+New entries for exceptions/BallastErrorCode (same families as the existing catalog):
+
+    INVALID_TASK("1008", "Invalid task", 400),                                  // per-field messages in data
+    TASK_NOT_FOUND("2003", "Task not found", 404),                              // also for another user's task
+    INVALID_STATUS_TRANSITION("3005", "This status change is not allowed", 409),
+
+Reused: INVALID_PAGINATION (1002), STALE_VERSION (3002), UNAUTHORIZED (4001).
