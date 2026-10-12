@@ -1,0 +1,69 @@
+{
+ "id": 2,
+ "name": "ivysaur",
+ "evolution_chain": {
+  "url": "https://pokeapi.co/api/v2/evolution-chain/1/"
+ },
+ "genera": [
+  {
+   "genus": "Seed Pokémon",
+   "language": {
+    "name": "en",
+    "url": "https://pokeapi.co/api/v2/language/9/"
+   }
+  },
+  {
+   "genus": "たねポケモン",
+   "language": {
+    "name": "ja",
+    "url": "https://pokeapi.co/api/v2/language/11/"
+   }
+  }
+ ],
+ "flavor_text_entries": [
+  {
+   "flavor_text": "When the bulb on\nits back grows\nlarge, it appears\fto lose the\nability to stand\non its hind legs.",
+   "language": {
+    "name": "en",
+    "url": "https://pokeapi.co/api/v2/language/9/"
+   },
+   "version": {
+    "name": "red",
+    "url": "https://pokeapi.co/api/v2/version/1/"
+   }
+  },
+  {
+   "flavor_text": "When the bulb on\nits back grows\nlarge, it appears\fto lose the\nability to stand\non its hind legs.",
+   "language": {
+    "name": "en",
+    "url": "https://pokeapi.co/api/v2/language/9/"
+   },
+   "version": {
+    "name": "blue",
+    "url": "https://pokeapi.co/api/v2/version/2/"
+   }
+  },
+  {
+   "flavor_text": "The bulb on its\nback grows by\ndrawing energy.\fIt gives off an\naroma when it is\nready to bloom.",
+   "language": {
+    "name": "en",
+    "url": "https://pokeapi.co/api/v2/language/9/"
+   },
+   "version": {
+    "name": "yellow",
+    "url": "https://pokeapi.co/api/v2/version/3/"
+   }
+  },
+  {
+   "flavor_text": "Exposure to sun­\nlight adds to its\nstrength. Sunlight\falso makes the bud\non its back grow\nlarger.",
+   "language": {
+    "name": "en",
+    "url": "https://pokeapi.co/api/v2/language/9/"
+   },
+   "version": {
+    "name": "gold",
+    "url": "https://pokeapi.co/api/v2/version/4/"
+   }
+  }
+ ]
+}

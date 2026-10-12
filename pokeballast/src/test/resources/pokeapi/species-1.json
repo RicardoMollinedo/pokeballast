@@ -1,0 +1,80 @@
+{
+ "id": 1,
+ "name": "bulbasaur",
+ "evolution_chain": {
+  "url": "https://pokeapi.co/api/v2/evolution-chain/1/"
+ },
+ "genera": [
+  {
+   "genus": "たねポケモン",
+   "language": {
+    "name": "ja",
+    "url": "https://pokeapi.co/api/v2/language/11/"
+   }
+  },
+  {
+   "genus": "Seed Pokémon",
+   "language": {
+    "name": "en",
+    "url": "https://pokeapi.co/api/v2/language/9/"
+   }
+  }
+ ],
+ "flavor_text_entries": [
+  {
+   "flavor_text": "Au matin de sa vie, la graine sur\nson dos lui fournit les éléments.",
+   "language": {
+    "name": "fr",
+    "url": "https://pokeapi.co/api/v2/language/5/"
+   },
+   "version": {
+    "name": "x",
+    "url": "https://pokeapi.co/api/v2/version/23/"
+   }
+  },
+  {
+   "flavor_text": "A strange seed was\nplanted on its\nback at birth.\fThe plant sprouts\nand grows with\nthis POKéMON.",
+   "language": {
+    "name": "en",
+    "url": "https://pokeapi.co/api/v2/language/9/"
+   },
+   "version": {
+    "name": "red",
+    "url": "https://pokeapi.co/api/v2/version/1/"
+   }
+  },
+  {
+   "flavor_text": "A strange seed was\nplanted on its\nback at birth.\fThe plant sprouts\nand grows with\nthis POKéMON.",
+   "language": {
+    "name": "en",
+    "url": "https://pokeapi.co/api/v2/language/9/"
+   },
+   "version": {
+    "name": "blue",
+    "url": "https://pokeapi.co/api/v2/version/2/"
+   }
+  },
+  {
+   "flavor_text": "It can go for days\nwithout eating a\nsingle morsel.\fIn the bulb on\nits back, it\nstores energy.",
+   "language": {
+    "name": "en",
+    "url": "https://pokeapi.co/api/v2/language/9/"
+   },
+   "version": {
+    "name": "yellow",
+    "url": "https://pokeapi.co/api/v2/version/3/"
+   }
+  },
+  {
+   "flavor_text": "The seed on its\nback is filled\nwith nutrients.\fThe seed grows\nsteadily larger as\nits body grows.",
+   "language": {
+    "name": "en",
+    "url": "https://pokeapi.co/api/v2/language/9/"
+   },
+   "version": {
+    "name": "gold",
+    "url": "https://pokeapi.co/api/v2/version/4/"
+   }
+  }
+ ]
+}
