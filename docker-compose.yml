@@ -1,0 +1,45 @@
+# Whole stack with one command:  docker compose up --build
+# UI: http://localhost:3000 or https://localhost:3443 (self-signed certificate: accept the browser warning)
+# API + Swagger: http://localhost:8080/swagger-ui.html (in production expose only the proxy)
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: pokeballast
+      POSTGRES_USER: pokeballast
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-pokeballast-demo}
+    volumes:
+      - pokeballast-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pokeballast -d pokeballast"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  api:
+    build: ./pokeballast
+    environment:
+      DB_URL: jdbc:postgresql://db:5432/pokeballast
+      DB_USERNAME: pokeballast
+      DB_PASSWORD: ${DB_PASSWORD:-pokeballast-demo}
+      # demo default only; in a real environment: JWT_SECRET=$(openssl rand -base64 48) docker compose up
+      JWT_SECRET: ${JWT_SECRET:-docker-demo-secret-change-me-0123456789abcdef}
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  web:
+    build: ./react-pokeballast
+    ports:
+      - "3000:80"
+      - "3443:443"
+    # to use a real certificate instead of the generated one, mount tls.crt and tls.key:
+    # volumes:
+    #   - ./certs:/etc/nginx/certs:ro
+    depends_on:
+      - api
+
+volumes:
+  pokeballast-data:
